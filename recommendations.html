@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <style>
+        /* Reset default styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Ensure content starts from the top */
+            min-height: 100vh; /* Ensures that body takes full height but allows scrolling */
+            padding-top: 20px; /* Adds some space from the top */
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .recommendations-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px; /* Adds some space above the recommendations container */
+        }
+
+        .recommendations-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .recommendations-container li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .recommendations-container li:hover {
+            background-color: #e1e1e1;
+        }
+
+        .recommendations-container li .name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .recommendations-container li .mutual-friends {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .recommendations-container form {
+            margin-left: 20px;
+        }
+
+        .recommendations-container button {
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .recommendations-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .recommendations-container {
+                width: 90%;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="recommendations-container">
+        <h2>Friend Recommendations</h2>
+        <ul>
+            {% for rec in recommendations %}
+                <li>
+                    <div>
+                        <span class="name">{{ rec.name }}</span>
+                        <span class="mutual-friends">({{ rec.mutual_friends }} mutual friends)</span>
+                    </div>
+                    <form action="{{ url_for('add_friend', friend_id=rec.user_id) }}" method="POST">
+                        <button type="submit">Add Friend</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
